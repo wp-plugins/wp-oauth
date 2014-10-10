@@ -96,6 +96,7 @@ The latter two technologies are for enterprise-scale apps and environments where
 
 = 0.1 =
 * First release, no upgrades yet.
+* Updated readme.
 
 == History ==
 
