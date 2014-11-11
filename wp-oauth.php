@@ -4,7 +4,7 @@
 Plugin Name: WP-OAuth
 Plugin URI: http://github.com/perrybutler/wp-oauth
 Description: A WordPress plugin that allows users to login or register by authenticating with an existing Google, Facebook, LinkedIn, Github, Reddit or Windows Live account via OAuth 2.0. Easily drops into new or existing sites, integrates with existing users.
-Version: 0.1.1
+Version: 0.1.2
 Author: Perry Butler
 Author URI: http://glassocean.net
 License: GPL2
@@ -96,7 +96,7 @@ Class WPOA {
 		add_action('wp_ajax_wpoa_logout', array($this, 'wpoa_logout'));
 		add_action('wp_ajax_wpoa_unlink_account', array($this, 'wpoa_unlink_account'));
 		add_action('wp_ajax_nopriv_wpoa_unlink_account', array($this, 'wpoa_unlink_account'));
-		add_shortcode('wpoa_login_form', 'wpoa_login_form');
+		add_shortcode('wpoa_login_form', array($this, 'wpoa_login_form'));
 		// push login messages into the DOM if the setting is enabled:
 		if (get_option('wpoa_show_login_messages') !== false) {
 			add_action('wp_footer', array($this, 'wpoa_push_login_messages'));
@@ -345,7 +345,7 @@ Class WPOA {
 		$a = shortcode_atts( array(
 			'layout' => 'links-column',
 		), $atts );
-		$html = wpoa_login_form_content($a['layout']);
+		$html = $this->wpoa_login_form_content($a['layout']);
 		return $html;
 	}
 	
