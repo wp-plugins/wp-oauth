@@ -27,15 +27,15 @@ A live demo of WP-OAuth is available at [www.choiceschances.com](http://www.choi
 = Features =
 
 * Fully integrates with WordPress. Drops into existing WordPress sites and integrates with existing WordPress users.
-* Supports third-party authentication with Google, Facebook and LinkedIn via OAuth 2.0. Providers can be enabled or disabled.
-* Add a login form to any Post or Page using the [wpoa_login_form] shortcode. Choose from 4 different layouts. See the Installation instructions for more details.
-* Customize the login screen with a logo or background. Point the logo URL to your home page instead of WordPress.org. Hide the default login form if you want. Automatically include login buttons for any providers that are enabled.
-* Authenticated users are automatically registered and/or logged into their WordPress user accounts. We request the minimum amount of user info (currently the user's id number only) for use when linking their third party accounts to their WordPress user account. No other user info is requested or collected.
-* Users can manage their third-party login providers via the standard "Your Profile" WordPress page. They may link more accounts, or unlink existing accounts.
-* Pushes the login result message into the DOM which can be extracted via Javascript for notifying the user. Avoids polluting the response url. This feature can also be disabled.
+* Supports third-party authentication with Google, Facebook, LinkedIn, Github, Reddit and Windows Live via OAuth 2.0. Providers can be enabled or disabled.
+* Add a custom login form to any Post or Page using the [wpoa_login_form] shortcode. Choose from 4 different layouts. See [Installation](https://wordpress.org/plugins/wp-oauth/installation/) for details.
+* Customize the default login screen with a logo or background. Point the logo URL to your home page instead of WordPress.org. Hide the default username/password login form if you want. Automatically include login buttons for any providers that are enabled.
+* Authenticated users are automatically registered and/or logged into their WordPress user accounts if *Anyone can register* has been enabled under Settings > General > Membership. We request the minimum amount of user info (currently the user's OAuth identity only) for use when linking a third-party login provider to their WordPress user account. No other user info is requested or collected.
+* Users can manage their third-party login providers via the standard "Your Profile" WordPress page. They may link more providers, or unlink existing providers.
+* Displays a message via Javascript to the user when the login or logout. This feature can also be disabled.
 * Supports cURL or stream context for the authentication flow, meaning the plugin should be compatible with a wide range of PHP servers.
 * The authentication flow was adapted from code samples provided by Google, Facebook and LinkedIn. It has been updated, rigorously tested and debugged for solid error handling. Provider implementations share much of the same code (very high code re-use) and the differences between the providers have been fully documented.
-* Extremely light-weight. Doesn't require third-party OAuth libraries; everything is built into the plugin first-class. Previously, WP-OpenLogin required LightOpenID and Facebook-PHP-SDK, but this is no longer necessary. Keeps the bloat low and the performance high.
+* Extremely light-weight, optimized code base for high performance. Doesn't require third-party OAuth libraries; everything is built first-class into the plugin. Previously, WP-OpenLogin required LightOpenID and Facebook-PHP-SDK, but this is no longer necessary. Keeps the bloat low and the performance high. Tested with P3 Plugin Profiler, WP-OAuth's plugin overhead is around 0.001 seconds which is 6x less overhead than Akismet in the same run! That means there shouldn't be a performance hit.
 
 = How to Contribute =
 
@@ -48,12 +48,12 @@ Visit the [GitHub development repository](https://github.com/perrybutler/WP-OAut
 = Quick Start =
 
 1. Download and install the WP-OAuth plugin.
-2. Setup your desired authentication providers' API key/secret in the WordPress backend under Settings > WP-OAuth.
-3. Enable the included login buttons, or add login buttons anywhere to your site/theme with the included shortcodes.
+2. Setup your desired authentication providers' API key/secret in the WordPress backend under *Settings > WP-OAuth*.
+3. Enable the custom login form via *Settings > WP-OAuth > Show login form*, or add it anywhere to your site with the [wpoa_login_form] shortcode.
 
 = Shortcode - [wpoa_login_form] =
 
-You may add a login form to any Post or Page using the [wpoa_login_form] shortcode. For example:
+Add a custom login form to your site using the [wpoa_login_form] shortcode. For example:
 
     [wpoa_login_form layout="buttons-column" align="left"]
 	
@@ -162,6 +162,7 @@ The latter two technologies are for enterprise-scale apps and environments where
 == Upgrade Notice ==
 
 = 0.2 =
+* Updated readme.
 * Updated readme.
 
 = 0.1.2 =
