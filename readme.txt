@@ -106,10 +106,13 @@ The latter two technologies are for enterprise-scale apps and environments where
 
 = 0.2 =
 *Fixes:*
+
 * Custom login buttons now show their dynamic styling while logging in/out.
 * Redirect to Last Page now uses the default redirect_to querystring parameter if available. This means if a user is redirected to the default login screen and then logs in, we can still redirect that user to the correct page instead of redirecting back to the login screen.
 
 *New features / enhancements:*
+
+* Custom login form now shows Logout button.
 * Merged the *Hide login form* and *Show provider buttons* settings into a single setting *Show login form*. This is to prevent admins from accidentally hiding both the default login form and custom login buttons, resulting in an empty login screen.
 * All instances of the custom login form now flow through a single function/shortcode which allows for a variety of custom login forms.
 * Four new settings for customizing the custom login form appearance on the default login screen.
@@ -119,6 +122,7 @@ The latter two technologies are for enterprise-scale apps and environments where
 * Improved the plugin class architecture.
 
 *Known issues:*
+
 * Compatibility issue with W3 Total Cache plugin: user redirection after login may fail. Probably need to whitelist/exclude WP-OAuth files/directory in W3TC settings. Fix coming...
 
 = 0.1.2 =
