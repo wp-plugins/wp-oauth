@@ -147,6 +147,9 @@ The latter two technologies are for enterprise-scale apps and environments where
 
 == Upgrade Notice ==
 
+= 0.2 =
+* Updated readme.
+
 = 0.1.2 =
 * Updated readme.
 
