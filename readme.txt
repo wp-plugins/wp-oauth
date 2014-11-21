@@ -26,6 +26,8 @@ A live demo of WP-OAuth is available at [www.choiceschances.com](http://www.choi
 
 = Features =
 
+* Free, unlimited, unbranded and white-labeled from the beginning. No upselling, no payment plans, no SaaS, no proxy authentication! WP-OAuth communicates from your WordPress site *directly* with the *trusted* third-party login providers, bypassing any *untrusted* middleman or proxies. Be aware that other social login plugins may do this, which defeats the purpose and security of OAuth.
+* WP-OAuth collects and stores ONLY the user's *OAuth identity* in the WordPress database for future logins; no other user information is collected or stored.
 * Fully integrates with WordPress. Drops into existing WordPress sites and integrates with existing WordPress users.
 * Supports third-party authentication with Google, Facebook, LinkedIn, Github, Reddit and Windows Live via OAuth 2.0. Providers can be enabled or disabled.
 * Add a custom login form to any Post or Page using the [wpoa_login_form] shortcode. Choose from 4 different layouts. See [Installation](https://wordpress.org/plugins/wp-oauth/installation/) for details.
