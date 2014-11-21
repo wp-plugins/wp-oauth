@@ -49,11 +49,34 @@ Visit the [GitHub development repository](https://github.com/perrybutler/WP-OAut
 2. Setup your desired authentication providers' API key/secret in the WordPress backend under Settings > WP-OAuth.
 3. Enable the included login buttons, or add login buttons anywhere to your site/theme with the included shortcodes.
 
-= Shortcode Tips =
+= Shortcode - [wpoa_login_form] =
 
-You may add a login form to any Post or Page using the [wpoa_login_form] shortcode. Choose from 4 different layouts: links-row, links-column, buttons-row, buttons-column. For example:
+You may add a login form to any Post or Page using the [wpoa_login_form] shortcode. For example:
 
-    [wpoa_login_form layout="buttons-column"]
+    [wpoa_login_form layout="buttons-column" align="left"]
+	
+Possible shortcode attributes:
+
+* layout - determines whether to display the login buttons as links or buttons, stacked vertically or lined up horizontally.
+  * Possible values: links-row, links-column, buttons-row, buttons-column
+* align - sets the horizontal alignment of the custom form elements.
+  * Possible values: left, middle, right
+* show_login - determines when the login buttons will be shown.
+  * Possible values: never, conditional, always
+* show_logout - determines when the logout button will be shown.
+  * Possible values: never, conditional, always
+* logged_out_title - sets the text to display above the custom login form when the user is logged out.
+  * Possible values: any text
+* logged_in_title - sets the text to display above the custom login form when the user is logged in.
+  * Possible values: any text
+* logging_in_title - sets the text to display above the custom login form when the user is logging ing.
+  * Possible values: any text
+* logging_out_title - sets the text to display above the custom login form when the user is logging out.
+  * Possible values: any text
+* style - sets the custom css style to apply to the custom login form.
+  * Possible values: any text
+* class - sets the custom css class to apply to the custom login form.
+  * Possible values: any text
 
 == Frequently Asked Questions ==
 
@@ -105,25 +128,23 @@ The latter two technologies are for enterprise-scale apps and environments where
 == Changelog ==
 
 = 0.2 =
-*Fixes:*
+* Fixes:
+  * Custom login buttons now show their dynamic styling while logging in/out.
+  * Redirect to Last Page now uses the default redirect_to querystring parameter if available. This means if a user is redirected to the default login screen and then logs in, we can still redirect that user to the correct page instead of redirecting back to the login screen.
 
-* Custom login buttons now show their dynamic styling while logging in/out.
-* Redirect to Last Page now uses the default redirect_to querystring parameter if available. This means if a user is redirected to the default login screen and then logs in, we can still redirect that user to the correct page instead of redirecting back to the login screen.
+* New features / enhancements:
+  * Custom login form now shows logout button.
+  * Merged the *Hide login form* and *Show provider buttons* settings into a single setting *Show login form*. This is to prevent admins from accidentally hiding both the default login form and custom login buttons, resulting in an empty login screen.
+  * All instances of the custom login form now flow through a single function/shortcode which allows for a variety of custom login forms.
+  * Nine new attributes for the [wpoa_login_form] shortcode.
+  * Four new settings for customizing the custom login form appearance on the default login screen.
+  * Two new settings: *Login Redirects To* and *Logout Redirects To* will redirect users to Home Page, Last Page, Specific Page, User's Profile Page, Admin Dashboard, or Custom URL.
+  * New setting: *Restore default settings*.
+  * Settings page has been fully restyled and redesigned for responsive layout and includes author info, help tips, auto warnings, etc.
+  * Improved the plugin class architecture.
 
-*New features / enhancements:*
-
-* Custom login form now shows Logout button.
-* Merged the *Hide login form* and *Show provider buttons* settings into a single setting *Show login form*. This is to prevent admins from accidentally hiding both the default login form and custom login buttons, resulting in an empty login screen.
-* All instances of the custom login form now flow through a single function/shortcode which allows for a variety of custom login forms.
-* Four new settings for customizing the custom login form appearance on the default login screen.
-* Two new settings: *Login Redirects To* and *Logout Redirects To* will redirect users to Home Page, Last Page, Specific Page, User's Profile Page, Admin Dashboard, or Custom URL.
-* New setting: *Restore default settings*.
-* Settings page has been fully restyled and redesigned for responsive layout and includes author info, help tips, auto warnings, etc.
-* Improved the plugin class architecture.
-
-*Known issues:*
-
-* Compatibility issue with W3 Total Cache plugin: user redirection after login may fail. Probably need to whitelist/exclude WP-OAuth files/directory in W3TC settings. Fix coming...
+* Known issues:
+  * Compatibility issue with W3 Total Cache plugin: user redirection after login may fail. Probably need to whitelist/exclude WP-OAuth files/directory in W3TC settings. Fix coming...
 
 = 0.1.2 =
 * Fixed [wpoa_login_form] shortcode.
