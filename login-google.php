@@ -51,9 +51,9 @@ elseif (isset($_GET['code'])) {
 	// post-auth phase, verify the state:
 	if ($_SESSION['WPOA']['STATE'] == $_GET['state']) {
 		// get an access token from the third party provider:
-		get_oauth_token();
+		get_oauth_token($this);
 		// get the user's third-party identity and attempt to login/register a matching wordpress user account:
-		$oauth_identity = get_oauth_identity();
+		$oauth_identity = get_oauth_identity($this);
 		$this->wpoa_login_user($oauth_identity);
 	}
 	else {
@@ -66,16 +66,16 @@ else {
 	// pre-auth, start the auth process:
 	if ((empty($_SESSION['WPOA']['EXPIRES_AT'])) || (time() > $_SESSION['WPOA']['EXPIRES_AT'])) {
 		// expired token; clear the state:
-		$this->wpoa_clear_login_state;
+		$this->wpoa_clear_login_state();
 	}
-	get_oauth_code();
+	get_oauth_code($this);
 }
 // we shouldn't be here, but just in case...
 $this->wpoa_end_login("Sorry, we couldn't log you in. The authentication flow terminated in an unexpected way. Please notify the admin or try again later.");
 # END OF AUTHENTICATION FLOW #
 
 # AUTHENTICATION FLOW HELPER FUNCTIONS #
-function get_oauth_code() {
+function get_oauth_code($wpoa) {
 	$params = array(
 		'response_type' => 'code',
 		'client_id' => CLIENT_ID,
@@ -89,8 +89,7 @@ function get_oauth_code() {
 	exit;
 }
 
-function get_oauth_token() {
-	//global $wpoa;
+function get_oauth_token($wpoa) {
 	$params = array(
 		'grant_type' => 'authorization_code',
 		'client_id' => CLIENT_ID,
@@ -124,7 +123,7 @@ function get_oauth_token() {
 			$context = $context  = stream_context_create($opts);
 			$result = @file_get_contents($url, false, $context);
 			if ($result === false) {
-				$this->wpoa_end_login("Sorry, we couldn't log you in. Could not retrieve access token via stream context. Please notify the admin or try again later.");
+				$wpoa->wpoa_end_login("Sorry, we couldn't log you in. Could not retrieve access token via stream context. Please notify the admin or try again later.");
 			}
 			break;
 	}
@@ -136,7 +135,7 @@ function get_oauth_token() {
 	// handle the result:
 	if (!$access_token || !$expires_in) {
 		// malformed access token result detected:
-		$this->wpoa_end_login("Sorry, we couldn't log you in. Malformed access token result detected. Please notify the admin or try again later.");
+		$wpoa->wpoa_end_login("Sorry, we couldn't log you in. Malformed access token result detected. Please notify the admin or try again later.");
 	}
 	else {
 		$_SESSION['WPOA']['ACCESS_TOKEN'] = $access_token;
@@ -146,8 +145,7 @@ function get_oauth_token() {
 	}
 }
 
-function get_oauth_identity() {
-	//global $wpoa;
+function get_oauth_identity($wpoa) {
 	// here we exchange the access token for the user info...
 	// set the access token param:
 	$params = array(
@@ -179,7 +177,7 @@ function get_oauth_identity() {
 			$context = $context  = stream_context_create($opts);
 			$result = @file_get_contents($url, false, $context);
 			if ($result === false) {
-				$this->wpoa_end_login("Sorry, we couldn't log you in. Could not retrieve user identity via stream context. Please notify the admin or try again later.");
+				$wpoa->wpoa_end_login("Sorry, we couldn't log you in. Could not retrieve user identity via stream context. Please notify the admin or try again later.");
 			}
 			$result_obj = json_decode($result, true);
 			break;
@@ -189,6 +187,9 @@ function get_oauth_identity() {
 	$oauth_identity['provider'] = $_SESSION['WPOA']['PROVIDER'];
 	$oauth_identity['id'] = $result_obj['id']; // PROVIDER SPECIFIC: this is how Google returns the user's unique id
 	//$oauth_identity['email'] = $result_obj['emails'][0]['value']; // PROVIDER SPECIFIC: Google returns an array of email addresses. To respect privacy we currently don't collect the user's email address.
+	if (!$oauth_identity['id']) {
+		$wpoa->wpoa_end_login("Sorry, we couldn't log you in. User identity was not found. Please notify the admin or try again later.");
+	}
 	return $oauth_identity;
 }
 # END OF AUTHENTICATION FLOW HELPER FUNCTIONS #
