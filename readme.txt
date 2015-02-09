@@ -134,6 +134,11 @@ The latter two technologies are for enterprise-scale apps and environments where
 
 == Changelog ==
 
+= 0.3 =
+= Fixes =
+* Now uses site_url instead of SERVER_NAME which should reflect a more accurate redirect_url.
+* Settings page improvements.
+
 = 0.2.2 =
 = New features / enhancements =
 * New login provider: Instagram.
