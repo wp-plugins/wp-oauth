@@ -9,7 +9,7 @@ define('HTTP_UTIL', get_option('wpoa_http_util'));
 define('CLIENT_ENABLED', get_option('wpoa_google_api_enabled'));
 define('CLIENT_ID', get_option('wpoa_google_api_id'));
 define('CLIENT_SECRET', get_option('wpoa_google_api_secret'));
-define('REDIRECT_URI', "http://" . rtrim($_SERVER['SERVER_NAME'], "/") . "/");
+define('REDIRECT_URI', rtrim(site_url(), '/') . '/');
 define('SCOPE', 'profile'); // PROVIDER SPECIFIC: 'profile' is the minimum scope required to get the user's id from Google
 define('URL_AUTH', "https://accounts.google.com/o/oauth2/auth?");
 define('URL_TOKEN', "https://accounts.google.com/o/oauth2/token?");
@@ -158,7 +158,7 @@ function get_oauth_identity($wpoa) {
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_URL, $url);
 			// PROVIDER NORMALIZATION: Github/Reddit require a User-Agent here...
-			// PROVIDER NORMALIZATION: PayPal/Reddit require that we send the access token via a bearer header, PayPal also requires a Content-Type: application/json header...
+			// PROVIDER NORMALIZATION: PayPal/Reddit require that we send the access token via a bearer header, PayPal also requires a Content-Type: application/json header, LinkedIn requires an x-li-format: json header...
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			$result = curl_exec($curl);
 			$result_obj = json_decode($result, true);
@@ -168,7 +168,7 @@ function get_oauth_identity($wpoa) {
 			$opts = array('http' =>
 				array(
 					'method'  => 'GET',
-					// PROVIDER NORMALIZATION: Reddit/Github User-Agent
+					// PROVIDER NORMALIZATION: Reddit/Github requires User-Agent here...
 					'header'  => "Authorization: Bearer " . $_SESSION['WPOA']['ACCESS_TOKEN'] . "\r\n" . "x-li-format: json\r\n", // PROVIDER SPECIFIC: i think only LinkedIn uses x-li-format...
 				)
 			);
