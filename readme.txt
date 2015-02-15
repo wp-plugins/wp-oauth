@@ -4,7 +4,7 @@ Donate link: http://glassocean.net
 Tags: login, membership, users, registration, oauth, social, social networking, community, security, connect with, authentication, authorization
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 0.3.1
+Stable tag: 0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,8 @@ Allows users to login or register by authenticating with an existing Google, Fac
 == Description ==
 
 New providers and features are being added regularly! See the [Changelog](https://wordpress.org/plugins/wp-oauth/changelog/) for details.
+
+As a reminder, WP-OAuth is a still a pre-v1.0 release, which means some features may not work as intended or might change over time. Please report any bugs/issues to the support forum so they can be fixed as soon as possible. Thank you!
 
 = Demo =
 
@@ -134,14 +136,23 @@ The latter two technologies are for enterprise-scale apps and environments where
 
 == Changelog ==
 
+= 0.4 =
+= New features / enhancements =
+* Added basic Battle.net support. Requires SSL.
+* Now compatible with CloudFlare Flexible SSL.
+* Settings page improvements.
+
 = 0.3.1 =
 = Fixes =
 * The wp_login action now properly passes the $user for improved compatibility with other plugins such as Simple History.
 
 = 0.3 =
+= New features / enhancements =
+* Settings page improvements.
+
 = Fixes =
 * Now uses site_url instead of SERVER_NAME which should reflect a more accurate redirect_url.
-* Settings page improvements.
+* Now compatible with Heroku cloud hosting.
 
 = 0.2.2 =
 = New features / enhancements =
